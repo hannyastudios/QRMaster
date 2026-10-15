@@ -3,13 +3,34 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>QR Master</title>
+<title>Gerador de QR Code Grátis com Cor e Gradiente | QR Master</title>
 <meta name="description" content="Gere um QR Code grátis para qualquer link, com a cor que você quiser (sólida ou gradiente). Rápido, sem cadastro e direto no navegador.">
+<link rel="canonical" href="https://qrmaster.com.br/">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta name="theme-color" content="#243447">
+
 <link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+
+<!-- prévia de compartilhamento   -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="QR Master">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:url" content="https://qrmaster.com.br/">
+<meta property="og:title" content="Gerador de QR Code Grátis com Cor e Gradiente | QR Master">
+<meta property="og:description" content="Cole o link, escolha a cor (sólida ou gradiente) e baixe o PNG. Grátis, sem cadastro e direto no navegador.">
+<meta property="og:image" content="https://qrmaster.com.br/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="QR Master — gerador de QR Code grátis">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Gerador de QR Code Grátis com Cor e Gradiente | QR Master">
+<meta name="twitter:description" content="Cole o link, escolha a cor (sólida ou gradiente) e baixe o PNG. Grátis, sem cadastro.">
+<meta name="twitter:image" content="https://qrmaster.com.br/og-image.png">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet">
-
 
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9388471777425918" crossorigin="anonymous"></script>
 
@@ -22,7 +43,7 @@ body{background:var(--sky);color:var(--navy);font:400 16px/1.55 Rubik,system-ui,
 :focus-visible{outline:3px solid var(--blue);outline-offset:2px}
 
 /* ---- primeira tela ferramenta no centro, anuncios em 4 lados ---- */
-.stage{min-height:100dvh;display:grid;grid-template-columns:176px minmax(0,1fr) 176px;grid-template-rows:106px 1fr 106px}
+.stage{min-height:100dvh;display:grid;grid-template-columns:176px minmax(0,1fr) 176px;grid-template-rows:auto 1fr auto}
 .ad{display:flex;align-items:center;justify-content:center;padding:8px;overflow:hidden}
 .ad-top{grid-column:1/4;grid-row:1}
 .ad-left{grid-column:1;grid-row:2}
@@ -30,9 +51,9 @@ body{background:var(--sky);color:var(--navy);font:400 16px/1.55 Rubik,system-ui,
 .ad-bottom{grid-column:1/4;grid-row:3}
 .ad-top ins,.ad-bottom ins{display:block;width:100%;max-width:970px;height:90px}
 .ad-left ins,.ad-right ins{display:block;width:160px;height:600px;max-height:100%}
-/* moldura some sozinha quando o anuncio carrega */
-.ad ins:empty{display:grid;place-items:center;border:2px dashed var(--soft);border-radius:12px;color:var(--muted);font-size:12px}
-.ad ins:empty::before{content:"Espaço de anúncio"}
+/* sem anuncio as bordas nao aparecem/ esperar os anuncios peidantes */
+.ad ins:empty,.ad ins[data-ad-status="unfilled"]{display:none}
+.ad:has(ins:empty),.ad:has(ins[data-ad-status="unfilled"]){padding:0}
 
 main{grid-column:2;grid-row:2;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;padding:20px 16px}
 .brand{display:flex;align-items:center;gap:14px}
@@ -56,14 +77,15 @@ input[type=color]{display:block;width:100%;height:42px;padding:3px;margin-top:4p
 
 button{width:100%;padding:13px;border:2px solid var(--navy);border-radius:12px;font:600 1rem Rubik,system-ui,sans-serif;color:var(--navy);cursor:pointer;box-shadow:3px 3px 0 var(--navy)}
 button:active:not(:disabled){transform:translate(3px,3px);box-shadow:0 0 0 var(--navy)}
-#go{background:var(--sun)}
+#go{background:var(--sun);color:#fff}
 #dl{background:#fff;margin-top:14px}
 button:disabled{opacity:.5;cursor:not-allowed;box-shadow:none}
 #msg{min-height:1.4em;margin:10px 0 0;color:#b3261e;font-size:.86rem;font-weight:500}
 
 .result{margin-top:22px;display:flex;flex-direction:column;align-items:center}
 .qrbox{width:262px;height:262px;border:2px solid var(--navy);border-radius:14px;display:grid;place-items:center;background:#fff;overflow:hidden;color:var(--muted);font-size:.9rem;text-align:center;padding:12px}
-.qrbox canvas{display:none;width:100%;height:100%}
+
+.qrbox canvas{display:none;max-width:95%;max-height:95%;width:auto;height:auto}
 .qrbox.has canvas{display:block}
 .qrbox.has span{display:none}
 #lbl{min-height:1.5em;margin:12px 0 0;font-weight:600;text-align:center;overflow-wrap:anywhere}
@@ -95,25 +117,26 @@ footer{margin-top:40px;background:var(--navy);color:#fff;padding:26px 20px;text-
 footer a{color:#fff;margin:0 10px}
 .ck{position:fixed;left:12px;right:12px;bottom:12px;max-width:640px;margin:0 auto;display:flex;gap:14px;align-items:center;background:#fff;border:2px solid var(--navy);border-radius:14px;box-shadow:4px 4px 0 var(--navy);padding:12px 16px;font-size:.85rem;z-index:10}
 .ck p{margin:0}
-.ck button{width:auto;padding:8px 16px;box-shadow:none;background:var(--sun)}
+.ck button{width:auto;padding:8px 16px;box-shadow:none;background:var(--sun);color:#fff}
 </style>
 </head>
 <body>
 
 <div class="stage">
-  <!-- ID de editor ja aplicado: ca-pub-9388471777425918
-       Laterais: bloco 5738070429 (Anuncios lateral) - funcionando
-       Topo e rodape: crie os blocos no AdSense e troque o data-ad-slot abaixo -->
+  <!-- topo e rodape ainda sem bloco eo data-ad-slot comeca com "TROQUE"
+       o espaco fica invisivel pro visitante eo bloco nao e enviado ao AdSense
+       pra ativar crio o bloco no AdSense e troco so o valor do data-ad-slot
+  faz quando o google liberar o anuncio peidante ;-; acho que 1 semana esperando a boa vontade do google kkkkkkk -->
   <aside class="ad ad-top"><ins class="adsbygoogle" data-ad-client="ca-pub-9388471777425918" data-ad-slot="TROQUE-PELO-SLOT-DO-TOPO" data-ad-format="horizontal"></ins></aside>
   <aside class="ad ad-left"><ins class="adsbygoogle" data-ad-client="ca-pub-9388471777425918" data-ad-slot="5738070429" data-ad-format="auto" data-full-width-responsive="true"></ins></aside>
 
   <main>
     <div class="brand">
       <svg class="logo" viewBox="0 0 46 46" aria-hidden="true">
-        <rect x="2" y="2" width="16" height="16" rx="5" fill="#10264d"/><rect x="28" y="2" width="16" height="16" rx="5" fill="#10264d"/><rect x="2" y="28" width="16" height="16" rx="5" fill="#10264d"/>
-        <rect x="28" y="28" width="7" height="7" rx="2" fill="#ffc933" stroke="#10264d" stroke-width="2"/><rect x="38" y="38" width="6" height="6" rx="2" fill="#2f6bff"/>
+        <rect x="2" y="2" width="16" height="16" rx="5" fill="#243447"/><rect x="28" y="2" width="16" height="16" rx="5" fill="#243447"/><rect x="2" y="28" width="16" height="16" rx="5" fill="#243447"/>
+        <rect x="28" y="28" width="8" height="8" rx="2.5" fill="#397F7A" stroke="#243447" stroke-width="2"/><rect x="38" y="38" width="6" height="6" rx="2" fill="#2f6bff"/>
       </svg>
-      <h1>QR Code Master</h1>
+      <h1>QR Master</h1>
     </div>
 
     <div class="card">
@@ -129,7 +152,7 @@ footer a{color:#fff;margin:0 10px}
           <label><input type="radio" name="modo" value="grad"><span>Gradiente</span></label>
         </div>
         <div class="colors">
-          <label>Cor 1<input type="color" id="c1" value="#10264d"></label>
+          <label>Cor 1<input type="color" id="c1" value="#243447"></label>
           <label id="c2w" hidden>Cor 2<input type="color" id="c2" value="#2f6bff"></label>
           <label>Fundo<input type="color" id="bg" value="#ffffff"></label>
         </div>
@@ -158,8 +181,8 @@ footer a{color:#fff;margin:0 10px}
   <h2>Como usar</h2>
   <ol>
     <li>Cole o link no campo <b>Link</b>. Se faltar o https://, ele é adicionado sozinho.</li>
-    <li>Escreva seu nome (ou o nome do projeto). Ele aparece embaixo do QR Code e vira o nome do arquivo.</li>
-    <li>Escolha a cor: sólida ou gradiente. Trocar as cores depois de gerar atualiza o QR Code na hora.</li>
+    <li>Escreva seu nome (ou o nome do projeto). Ele aparece embaixo do QR Code, sai junto na imagem baixada e vira o nome do arquivo.</li>
+    <li>Escolha a cor: sólida ou gradiente. Trocar as cores ou o nome depois de gerar atualiza o QR Code na hora.</li>
     <li>Clique em <b>Gerar QR Code</b> e depois em <b>Baixar PNG</b>.</li>
   </ol>
 
@@ -174,13 +197,14 @@ footer a{color:#fff;margin:0 10px}
 
   <h2>Perguntas frequentes</h2>
   <details><summary>Funciona com qualquer link?</summary><p>Sim. Qualquer endereço que comece com http:// ou https://, como sites, redes sociais, WhatsApp (wa.me), Google Maps, Google Forms e links de vídeos ou arquivos.</p></details>
-  <details><summary>É grátis? Preciso me cadastrar?</summary><p>É grátis e não pede cadastro, e-mail nem senha.</p></details>
+  <details><summary>É grátis? Preciso me cadastrar?</summary><p>É grátis e não pede cadastro, e-mail nem senha. Pode gerar quantos QR Codes quiser, sem limite.</p></details>
   <details><summary>O QR Code vence ou expira?</summary><p>Não. O QR Code guarda o endereço do link dentro da própria imagem. Se o site de destino sair do ar ou mudar de endereço, aí sim o código deixa de funcionar.</p></details>
   <details><summary>Meu link fica salvo no site?</summary><p>Não. Tudo é feito no seu navegador, e nada do que você digita é enviado para nós.</p></details>
-  <details><summary>Por que só posso gerar um QR Code a cada 30 segundos?</summary><p>Esse intervalo evita uso abusivo e mantém o site rápido para todo mundo. Mudar as cores do QR Code que você já gerou não conta e pode ser feito quantas vezes quiser.</p></details>
+  <details><summary>Posso usar o QR Code para fins comerciais?</summary><p>Pode. A imagem gerada é sua e pode ser usada em cartão de visita, cardápio, embalagem, cartaz, vitrine ou anúncio, sem precisar dar crédito.</p></details>
+  <details><summary>Dá para colocar o QR Code em gradiente?</summary><p>Dá. Escolha a opção <b>Gradiente</b> e as duas cores. Mantenha as duas escuras sobre fundo claro para o código continuar sendo lido com facilidade.</p></details>
 
   <h2 id="privacidade">Política de Privacidade</h2>
-  <p>Não coletamos seu link nem seu nome: eles ficam apenas no seu navegador. Guardamos localmente um único dado, o horário da última geração, para controlar o intervalo de 30 segundos, e a sua escolha sobre o aviso de cookies.</p>
+  <p>Não coletamos seu link nem seu nome: eles ficam apenas no seu navegador. O único dado guardado localmente é a sua escolha sobre o aviso de cookies.</p>
   <p>Este site exibe anúncios do Google AdSense. O Google e seus parceiros podem usar cookies para mostrar anúncios com base nas suas visitas a este e a outros sites. Você pode gerenciar ou desativar a personalização de anúncios em <a href="https://adssettings.google.com" rel="noopener" target="_blank">adssettings.google.com</a>. Tratamos os dados conforme a Lei Geral de Proteção de Dados (LGPD).</p>
 
   <h2 id="contato">Contato</h2>
@@ -197,55 +221,99 @@ footer a{color:#fff;margin:0 10px}
   <button type="button" id="ckok">Entendi</button>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.js"></script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "QR Master",
+      "url": "https://qrmaster.com.br/",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "Qualquer navegador",
+      "inLanguage": "pt-BR",
+      "description": "Gerador de QR Code grátis para qualquer link, com cor sólida ou gradiente, sem cadastro e direto no navegador.",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "BRL" }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        { "@type": "Question", "name": "Funciona com qualquer link?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Sim. Qualquer endereço que comece com http:// ou https://, como sites, redes sociais, WhatsApp (wa.me), Google Maps, Google Forms e links de vídeos ou arquivos." } },
+        { "@type": "Question", "name": "É grátis? Preciso me cadastrar?",
+          "acceptedAnswer": { "@type": "Answer", "text": "É grátis e não pede cadastro, e-mail nem senha. Pode gerar quantos QR Codes quiser, sem limite." } },
+        { "@type": "Question", "name": "O QR Code vence ou expira?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Não. O QR Code guarda o endereço do link dentro da própria imagem. Se o site de destino sair do ar ou mudar de endereço, aí sim o código deixa de funcionar." } },
+        { "@type": "Question", "name": "Meu link fica salvo no site?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Não. Tudo é feito no seu navegador, e nada do que você digita é enviado para nós." } },
+        { "@type": "Question", "name": "Posso usar o QR Code para fins comerciais?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Pode. A imagem gerada é sua e pode ser usada em cartão de visita, cardápio, embalagem, cartaz, vitrine ou anúncio, sem precisar dar crédito." } },
+        { "@type": "Question", "name": "Dá para colocar o QR Code em gradiente?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Dá. Escolha a opção Gradiente e as duas cores. Mantenha as duas escuras sobre fundo claro para o código continuar sendo lido com facilidade." } }
+      ]
+    }
+  ]
+}
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.js" integrity="sha384-8FWZA6BGMXhsfO+BLtrJK0We6gg5o1JyO8xQm6peWDEUs17ACA5ziE/NIAkl9z2k" crossorigin="anonymous"></script>
 <script>
 (function(){
   var $=function(i){return document.getElementById(i)};
   var f=$('f'),url=$('url'),nome=$('nome'),msg=$('msg'),go=$('go'),dl=$('dl'),
       cv=$('qr'),box=$('qrbox'),lbl=$('lbl'),c1=$('c1'),c2=$('c2'),c2w=$('c2w'),bg=$('bg'),
       modos=document.querySelectorAll('input[name=modo]');
-  var WAIT=30, KEY='qr_ultimo', mem=0, timer=null, matrix=null;
+  var matrix=null;
 
   if(window.qrcode&&qrcode.stringToBytesFuncs&&qrcode.stringToBytesFuncs['UTF-8']) qrcode.stringToBytes=qrcode.stringToBytesFuncs['UTF-8'];
   $('ano').textContent=new Date().getFullYear();
-
-  /* ---- limite de 1 QR novo a cada 30 segundos por pessoa (em cache) ---- */
-  function last(){try{return +localStorage.getItem(KEY)||mem}catch(e){return mem}}
-  function stamp(){mem=Date.now();try{localStorage.setItem(KEY,String(mem))}catch(e){}}
-  function restante(){return Math.min(WAIT,Math.max(0,Math.ceil((last()+WAIT*1000-Date.now())/1000)))}
-  function tick(){
-    var s=restante();
-    if(s>0){go.disabled=true;go.textContent='Aguarde '+s+' s para gerar outro';}
-    else{go.disabled=false;go.textContent='Gerar QR Code';clearInterval(timer);timer=null;}
-  }
-  function espera(){if(restante()>0&&!timer){timer=setInterval(tick,500);} tick();}
-  espera();
 
   /* ---- cores ---- */
   function modo(){return document.querySelector('input[name=modo]:checked').value}
   function lum(h){var v=[1,3,5].map(function(i){var c=parseInt(h.substr(i,2),16)/255;return c<=.03928?c/12.92:Math.pow((c+.055)/1.055,2.4)});return .2126*v[0]+.7152*v[1]+.0722*v[2]}
   function ratio(a,b){var x=lum(a),y=lum(b);return (Math.max(x,y)+.05)/(Math.min(x,y)+.05)}
 
+  /* ---- desenha o QR Code (e o nome, quando tiver) no canvas ---- */
   function draw(){
     if(!matrix) return;
-    var n=matrix.length, m=4, ms=Math.floor(1024/(n+2*m)), S=ms*(n+2*m), x=cv.getContext('2d'), g=modo()==='grad', r, c;
-    cv.width=cv.height=S;
-    x.fillStyle=bg.value; x.fillRect(0,0,S,S);
+    var n=matrix.length, m=4, ms=Math.floor(1024/(n+2*m)), S=ms*(n+2*m),
+        txt=nome.value.trim(), fs=Math.round(S*0.058), extra=txt?Math.round(fs*2):0,
+        x=cv.getContext('2d'), g=modo()==='grad', r, c;
+
+    cv.width=S; cv.height=S+extra;
+    x.fillStyle=bg.value; x.fillRect(0,0,S,S+extra);
+
     if(g){var gr=x.createLinearGradient(m*ms,m*ms,S-m*ms,S-m*ms);gr.addColorStop(0,c1.value);gr.addColorStop(1,c2.value);x.fillStyle=gr;}
     else x.fillStyle=c1.value;
     for(r=0;r<n;r++)for(c=0;c<n;c++)if(matrix[r][c])x.fillRect((c+m)*ms,(r+m)*ms,ms,ms);
+
+    /* nome embaixo do QR Code dentro da imagem baixada */
+    if(txt){
+      var maxw=S-2*m*ms, fonte=function(t){return '600 '+t+'px Rubik,system-ui,-apple-system,Arial,sans-serif'};
+      x.textAlign='center'; x.textBaseline='middle'; x.fillStyle=c1.value;
+      x.font=fonte(fs);
+      while(fs>14 && x.measureText(txt).width>maxw){fs-=2; x.font=fonte(fs);}
+      x.fillText(txt, S/2, S+extra*0.45, maxw);
+    }
+
     box.classList.add('has');
     var cores=g?[c1.value,c2.value]:[c1.value], baixo=cores.some(function(k){return ratio(k,bg.value)<3}),
         invertido=cores.some(function(k){return lum(k)>lum(bg.value)});
     msg.textContent=baixo?'Atenção: contraste baixo entre a cor e o fundo. O QR Code pode não ser lido.':(invertido?'Dica: cores claras sobre fundo escuro nem sempre são lidas. Teste com o celular.':'');
   }
   [c1,c2,bg].forEach(function(el){el.addEventListener('input',draw)});
+  nome.addEventListener('input',function(){lbl.textContent=nome.value.trim();draw();});
   Array.prototype.forEach.call(modos,function(r){r.addEventListener('change',function(){c2w.hidden=modo()!=='grad';draw();})});
+
+  /* a Rubik pode chegar depois do primeiro desenho: redesenha quando ela carregar */
+  if(document.fonts&&document.fonts.load){
+    try{document.fonts.load('600 60px Rubik').then(function(){if(matrix)draw()})}catch(e){}
+  }
 
   /* ---- gerar ---- */
   f.addEventListener('submit',function(e){
     e.preventDefault();
-    if(restante()>0){espera();return;}
     var v=url.value.trim();
     if(!v){msg.textContent='Digite um link para gerar o QR Code.';url.focus();return;}
     if(!/^https?:\/\//i.test(v)) v='https://'+v;
@@ -256,13 +324,12 @@ footer a{color:#fff;margin:0 10px}
     for(r=0;r<n;r++){matrix.push([]);for(c=0;c<n;c++)matrix[r].push(q.isDark(r,c));}
     lbl.textContent=nome.value.trim();
     msg.textContent=''; draw(); dl.disabled=false;
-    stamp(); espera();
   });
 
   /* ---- baixar PNG ---- */
   dl.addEventListener('click',function(){
     if(!matrix) return;
-    var slug=nome.value.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'');
+    var slug=nome.value.normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'');
     cv.toBlob(function(b){
       var a=document.createElement('a'); a.href=URL.createObjectURL(b); a.download=(slug||'qrcode')+'.png';
       document.body.appendChild(a); a.click(); a.remove();
@@ -275,7 +342,7 @@ footer a{color:#fff;margin:0 10px}
   try{if(!localStorage.getItem('ck_ok')) ck.hidden=false;}catch(e){ck.hidden=false;}
   $('ckok').addEventListener('click',function(){ck.hidden=true;try{localStorage.setItem('ck_ok','1')}catch(e){}});
 
-  /* ---- ativa os 4 blocos de anúncio ---- */
+  /* ---- ativa os blocos de anúncio que já têm slot de verdade ---- */
   document.querySelectorAll('ins.adsbygoogle').forEach(function(el){
     if(/TROQUE/.test(el.getAttribute('data-ad-slot')||'')) return; /* bloco ainda nao criado */
     try{(window.adsbygoogle=window.adsbygoogle||[]).push({});}catch(e){}
